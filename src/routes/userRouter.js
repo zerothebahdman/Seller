@@ -1,13 +1,18 @@
 const express = require("express");
+const {
+  createUser,
+  getAllUsers,
+  getAllReviews,
+  getOneUser,
+  createReview,
+} = require("../controller/UserController");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  try {
-    res.status(200).json(`URL ${req.originalUrl} found`);
-  } catch (err) {
-    res.status(err.status).json(err.message);
-  }
-});
+router.route("/reviews").get(getAllReviews).post(createReview);
+router.get("/", getAllUsers);
+router.get("/:uuid", getOneUser);
+
+router.post("/", createUser);
 
 module.exports = router;
