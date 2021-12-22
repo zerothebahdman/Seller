@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const userRouter = require("./routes/userRouter");
 const adsRouter = require("./routes/adsRouter");
 const adminRouter = require("./routes/adminRouter");
+const globalErrorHandler = require("./middleware/ErrorHandlerMiddleware");
+const AppError = require("./utils/AppErrorClass");
 
 const app = express();
 
@@ -17,5 +19,16 @@ if (process.env.APP_ENV === "development") {
 app.use("/api/v1/user/", userRouter);
 app.use("/api/v1/ads/", adsRouter);
 app.use("/api/v1/admin/", adminRouter);
+
+// Handling unhandled endpoints
+app.all("*", (req, res, next) => {
+  // res.status(404).json({
+  //   status: `fail`,
+  //   message: `404 ${req.originalUrl} not found on the server.`,
+  // });
+  next(new AppError(`Cant find ${req.originalUrl} on the server.`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;

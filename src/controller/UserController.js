@@ -1,15 +1,4 @@
-// const Sequelize = require("sequelize");
 const { User, Reviews } = require("../../models");
-
-exports.createUser = async (req, res, next) => {
-  try {
-    const { name, email, phoneNumber } = req.body;
-    const user = await User.create({ name, email, phone_number: phoneNumber });
-    res.status(200).json({ status: "success", user });
-  } catch (err) {
-    res.status(err.status || 500).json(err);
-  }
-};
 
 exports.getAllUsers = async (req, res, next) => {
   try {

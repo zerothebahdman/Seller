@@ -11,7 +11,11 @@ module.exports = {
       name: {
         type: DataTypes.STRING,
       },
-      email: { type: DataTypes.STRING, allowNull: false },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: { msg: "Opps!, This email is already in use." },
+      },
       password: { type: DataTypes.STRING },
       avatar: { type: DataTypes.STRING },
       phone_number: { type: DataTypes.STRING, allowNull: false },

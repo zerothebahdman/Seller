@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return { ...this.get(), id: undefined }; // this hides the id field when data is returned to the user
+      return { ...this.get(), id: undefined, password: undefined }; // this hides the id field when data is returned to the user
     }
   }
   User.init(
@@ -32,8 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isEmail: { msg: "Opps!, You email type is invalid." },
-          notNull: { msg: "Opps!. Email must specified." },
-          notEmpty: { msg: "Opps!. Email can't be empty." },
+          notNull: { msg: "Opps!, Email must specified." },
+          notEmpty: { msg: "Opps!, Email can't be empty." },
+          // unique: { msg: "Opps!, This email is already in use." },
         },
       },
       password: {
