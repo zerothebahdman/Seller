@@ -7,11 +7,12 @@ const {
 } = require("../controller/UserController");
 
 const { createUser, login } = require("../controller/AuthController");
+const { auth } = require("../middleware/AuthMiddleware");
 
 const router = express.Router();
 
-router.route("/reviews").get(getAllReviews).post(createReview);
-router.get("/", getAllUsers);
+router.route("/reviews").get(auth, getAllReviews).post(createReview);
+router.get("/", auth, getAllUsers);
 router.get("/:uuid", getOneUser);
 
 router.post("/signup", createUser);

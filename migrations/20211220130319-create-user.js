@@ -17,6 +17,7 @@ module.exports = {
         unique: { msg: "Opps!, This email is already in use." },
       },
       password: { type: DataTypes.STRING },
+      password_updated_at: DataTypes.STRING,
       avatar: { type: DataTypes.STRING },
       phone_number: { type: DataTypes.STRING, allowNull: false },
       description: { type: DataTypes.STRING },

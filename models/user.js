@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         //   min: 5,
         // },
       },
+      password_updated_at: DataTypes.STRING,
       avatar: { type: DataTypes.STRING },
       phone_number: {
         type: DataTypes.STRING,
