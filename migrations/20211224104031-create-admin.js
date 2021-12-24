@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("admins", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -8,20 +8,25 @@ module.exports = {
         type: DataTypes.INTEGER,
       },
       uuid: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 },
-      name: {
-        type: DataTypes.STRING,
-      },
+      name: DataTypes.STRING,
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
-      password: { type: DataTypes.STRING },
-      password_updated_at: DataTypes.STRING,
-      avatar: { type: DataTypes.STRING },
-      phone_number: { type: DataTypes.STRING, allowNull: false },
-      description: { type: DataTypes.STRING },
-      email_verifed_at: { type: DataTypes.DATE },
+      shop_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email_verifed_at: DataTypes.DATE,
+      admin: { type: DataTypes.BOOLEAN, allowNull: true },
+      vendor: { type: DataTypes.BOOLEAN, allowNull: true },
+      phone_number: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        avatar: { type: DataTypes.STRING, allowNull: true },
+        location: { type: DataTypes.STRING, allowNull: true },
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -33,6 +38,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("admins");
   },
 };

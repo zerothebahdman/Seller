@@ -8,7 +8,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ User }) {
-      this.belongsTo(User, { foreignKey: "userId", as: "user" }); // the second method as serves as an alias for the relationship. This is what will be used when calling the relationship
+      this.belongsTo(User, {
+        foreignKey: "userId",
+        as: "users",
+        hooks: true,
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }); // the second method as serves as an alias for the relationship. This is what will be used when calling the relationship
     }
 
     toJSON() {

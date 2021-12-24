@@ -11,7 +11,16 @@ module.exports = {
       review: {
         type: DataTypes.STRING,
       },
-      userId: { type: DataTypes.INTEGER, allowNull: false },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "users", // Name of the created table
+          key: "id",
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        },
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

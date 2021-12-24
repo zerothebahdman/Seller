@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("sub_categories", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,17 +11,16 @@ module.exports = {
       name: {
         type: DataTypes.STRING,
       },
-      email: {
-        type: DataTypes.STRING,
+      categoryId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
+        references: {
+          model: "categories", // Name of the created table
+          key: "id",
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        },
       },
-      password: { type: DataTypes.STRING },
-      password_updated_at: DataTypes.STRING,
-      avatar: { type: DataTypes.STRING },
-      phone_number: { type: DataTypes.STRING, allowNull: false },
-      description: { type: DataTypes.STRING },
-      email_verifed_at: { type: DataTypes.DATE },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -33,6 +32,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("sub_categories");
   },
 };

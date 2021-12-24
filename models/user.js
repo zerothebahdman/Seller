@@ -9,7 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Reviews }) {
       // define association here
-      User.hasMany(Reviews, { foreignKey: "userId", as: "reviews" }); // the second method as serves as an alias for the relationship. This is what will be used when calling the relationship
+      User.hasMany(Reviews, {
+        foreignKey: "userId",
+        as: "reviews",
+        hooks: true,
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }); // the second method as serves as an alias for the relationship. This is what will be used when calling the relationship
     }
 
     toJSON() {
@@ -30,21 +36,21 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           isEmail: { msg: "Opps!, You email type is invalid." },
           notNull: { msg: "Opps!, Email must specified." },
           notEmpty: { msg: "Opps!, Email can't be empty." },
-          // unique: { msg: "Opps!, This email is already in use." },
         },
       },
       password: {
         type: DataTypes.STRING,
-        // allowNull: false,
-        // validate: {
-        //   notNull: { msg: "Opps!. This is a required field." },
-        //   notEmpty: { msg: "Opps!. This is a required field." },
-        //   min: 5,
-        // },
+        allowNull: false,
+        validate: {
+          notNull: { msg: "Opps!. This is a required field." },
+          notEmpty: { msg: "Opps!. This is a required field." },
+          min: 5,
+        },
       },
       password_updated_at: DataTypes.STRING,
       avatar: { type: DataTypes.STRING },
