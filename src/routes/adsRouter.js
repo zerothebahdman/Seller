@@ -1,13 +1,8 @@
 const express = require("express");
+const { getAllAd, createAd } = require("../controller/AdsController");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  try {
-    res.status(200).json(`URL ${req.originalUrl} found`);
-  } catch (err) {
-    res.status(err.status).json(err.message);
-  }
-});
+router.route("/").get(getAllAd).post(createAd);
 
 module.exports = router;

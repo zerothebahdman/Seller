@@ -19,14 +19,11 @@ exports.auth = async (req, res, next) => {
         new AppError("You are not authenticated, please login.", 401)
       );
     }
-    console.log(new Date(1647992159 * 1000));
     //   Check if the token is valid
     const decodedToken = await promisify(jwt.verify)(
       token,
       process.env.JWT_SECRET_TOKEN
     );
-
-    console.log(decodedToken.uuid);
 
     // Check if user exist
     const { uuid } = decodedToken;
