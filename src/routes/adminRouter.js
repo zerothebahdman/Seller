@@ -1,13 +1,15 @@
 const express = require("express");
+const {
+  login,
+  signup,
+  getAllAdmins,
+} = require("../controller/AdminController");
+const { adminAuth } = require("../middleware/AuthMiddleware");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  try {
-    res.status(200).json(`URL ${req.originalUrl} found`);
-  } catch (err) {
-    res.status(err.status).json(err.message);
-  }
-});
+router.get("/", adminAuth, getAllAdmins);
+router.post("/login", login);
+router.post("/signup", signup);
 
 module.exports = router;

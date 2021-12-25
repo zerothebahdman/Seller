@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "cascade",
       });
     }
+
+    toJSON() {
+      return { ...this.get(), id: undefined, password: undefined };
+    }
   }
   admin.init(
     {
@@ -29,14 +33,23 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: { msg: `Opps!, please enter a valid email address` },
         },
       },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "Opps!. This is a required field." },
+          notEmpty: { msg: "Opps!. This is a required field." },
+          min: 5,
+        },
+      },
+      password_updated_at: DataTypes.STRING,
       shop_name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: { notEmpty: { msg: `Opps!, please specify a shop name` } },
       },
       email_verifed_at: DataTypes.DATE,
-      admin: { type: DataTypes.BOOLEAN, allowNull: true },
-      vendor: { type: DataTypes.BOOLEAN, allowNull: true },
+      role: { type: DataTypes.ENUM("admin", "vendor"), defaultValue: "vendor" },
       phone_number: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -14,27 +14,19 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      shop_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      password: { type: DataTypes.STRING, allowNull: false },
+      password_updated_at: DataTypes.STRING,
+      shop_name: { type: DataTypes.STRING, allowNull: false },
       email_verifed_at: DataTypes.DATE,
-      admin: { type: DataTypes.BOOLEAN, allowNull: true },
-      vendor: { type: DataTypes.BOOLEAN, allowNull: true },
+      role: { type: DataTypes.ENUM("admin", "vendor"), defaultValue: "vendor" },
       phone_number: {
         type: DataTypes.STRING,
         allowNull: false,
         avatar: { type: DataTypes.STRING, allowNull: true },
         location: { type: DataTypes.STRING, allowNull: true },
       },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
+      createdAt: { allowNull: false, type: DataTypes.DATE },
+      updatedAt: { allowNull: false, type: DataTypes.DATE },
     });
   },
   down: async (queryInterface, DataTypes) => {
