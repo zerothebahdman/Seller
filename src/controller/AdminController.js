@@ -21,16 +21,6 @@ exports.getAllAdmins = async (req, res, next) => {
 exports.signup = async (req, res, next) => {
   const { name, email, password, shopName, phoneNumber, role } = req.body;
   try {
-    const checkIfUserExistsWithEmail = await Admin.findOne({
-      where: { email },
-    });
-    if (checkIfUserExistsWithEmail)
-      return next(
-        new AppError(
-          `Opps!, this email ${email} is already in use please try again`,
-          403
-        )
-      );
     const hashedPassword = await bcrypt.hash(password, 13);
     const admin = await Admin.create({
       name,
