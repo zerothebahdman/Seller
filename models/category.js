@@ -7,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ SubCategory, Ads }) {
+    static associate({ SubCategory, Product }) {
       this.hasMany(SubCategory, {
-        as: "subCategory",
+        as: "subcategory",
         hooks: true,
         onDelete: "cascade",
         onUpdate: "cascade",
       });
-      this.hasMany(Ads, {
-        as: "ads",
+      this.hasMany(Product, {
+        as: "product",
         hooks: true,
         onDelete: "cascade",
         onUpdate: "cascade",
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Category",
-      tabelName: "category",
+      tableName: "categories",
     }
   );
   return category;

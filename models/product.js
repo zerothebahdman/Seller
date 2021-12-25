@@ -2,19 +2,21 @@ const { Model } = require("sequelize");
 const slugify = require("slugify");
 
 module.exports = (sequelize, DataTypes) => {
-  class ads extends Model {
+  class product extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate({ Admin, Category, SubCategory }) {
-      this.belongsTo(Category, { as: "Category" });
-      this.belongsTo(SubCategory, { as: "subCategory" });
+      this.belongsTo(Category, { as: "category" });
+      this.belongsTo(SubCategory, {
+        as: "subcategory",
+      });
       this.belongsTo(Admin, { as: "admin" });
     }
   }
-  ads.init(
+  product.init(
     {
       uuid: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 },
       adminId: {
@@ -56,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         references: "category",
         referencesKey: "id",
       },
-      subCategoryId: {
+      subcategoryId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: "sub_category",
@@ -103,9 +105,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Ads",
-      tabelName: "ads",
+      modelName: "Product",
+      tableName: "products",
     }
   );
-  return ads;
+  return product;
 };

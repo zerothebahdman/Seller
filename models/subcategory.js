@@ -1,23 +1,25 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class subCategory extends Model {
+  class subcategory extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Category, Ads }) {
-      this.belongsTo(Category, { as: "category" });
-      this.hasMany(Ads, {
-        as: "ads",
+    static associate({ Category, Product }) {
+      this.belongsTo(Category, {
+        as: "category",
+      });
+      this.hasMany(Product, {
+        as: "product",
         hooks: true,
         onDelete: "cascade",
         onUpdate: "cascade",
       });
     }
   }
-  subCategory.init(
+  subcategory.init(
     {
       uuid: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 },
       name: DataTypes.STRING,
@@ -26,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "SubCategory",
-      tableName: "subCategory",
+      tableName: "subcategories",
     }
   );
-  return subCategory;
+  return subcategory;
 };

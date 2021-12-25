@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("ads", {
+    await queryInterface.createTable("products", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -38,11 +38,11 @@ module.exports = {
           onDelete: "CASCADE",
         },
       },
-      subCategoryId: {
+      subcategoryId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "sub_categories", // Name of the created table
+          model: "subcategories", // Name of the created table
           key: "id",
           onUpdate: "CASCADE",
           onDelete: "CASCADE",
@@ -92,6 +92,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("ads");
+    await queryInterface.dropTable("products");
   },
 };
