@@ -12,7 +12,7 @@ const app = express();
 // Middleware that performs body Parsering, reading data from the request body and storing it in req.body
 app.use(express.json());
 
-if (process.env.APP_ENV === "development") {
+if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
