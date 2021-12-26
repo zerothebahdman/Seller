@@ -43,13 +43,11 @@ module.exports = (sequelize, DataTypes) => {
           min: 5,
         },
       },
-      password_updated_at: DataTypes.STRING,
       shop_name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: { notEmpty: { msg: `Opps!, please specify a shop name` } },
       },
-      email_verifed_at: DataTypes.DATE,
       role: { type: DataTypes.ENUM("admin", "vendor"), defaultValue: "vendor" },
       phone_number: {
         type: DataTypes.STRING,
@@ -58,11 +56,29 @@ module.exports = (sequelize, DataTypes) => {
           isNumeric: { msg: `Opps!, please specify a valid phone number` },
           notEmpty: { msg: `Opps!, please a phone number` },
         },
-        avatar: { type: DataTypes.STRING, allowNull: true },
-        location: { type: DataTypes.STRING, allowNull: true },
-        createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE,
       },
+      avatar: { type: DataTypes.STRING, allowNull: true },
+      location: { type: DataTypes.STRING, allowNull: true },
+      password_updated_at: DataTypes.STRING,
+      email_verifed_at: DataTypes.DATE,
+      email_verification_token: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      email_verification_token_expires_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      password_reset_token: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      password_reset_token_expires_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
     },
     {
       sequelize,
