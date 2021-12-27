@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
       avatar: { type: DataTypes.STRING, allowNull: true },
       location: { type: DataTypes.STRING, allowNull: true },
       password_updated_at: DataTypes.STRING,
-      email_verifed_at: DataTypes.DATE,
+      email_verified_at: DataTypes.DATE,
       email_verification_token: {
         type: DataTypes.STRING,
         allowNull: true,

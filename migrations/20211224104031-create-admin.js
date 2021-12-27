@@ -20,7 +20,7 @@ module.exports = {
       avatar: { type: DataTypes.STRING, allowNull: true },
       location: { type: DataTypes.STRING, allowNull: true },
       role: { type: DataTypes.ENUM("admin", "vendor"), defaultValue: "vendor" },
-      email_verifed_at: DataTypes.DATE,
+      email_verified_at: DataTypes.DATE,
       phone_number: {
         type: DataTypes.STRING,
         allowNull: false,
