@@ -18,7 +18,15 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return { ...this.get(), id: undefined, password: undefined };
+      return {
+        ...this.get(),
+        id: undefined,
+        password: undefined,
+        email_verification_token_expires_at: undefined,
+        email_verification_token: undefined,
+        password_reset_token: undefined,
+        password_reset_token_expires_at: undefined,
+      };
     }
   }
   admin.init(
