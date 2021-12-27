@@ -1,5 +1,6 @@
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
 const AppError = require("../utils/AppErrorClass");
 const { User, Admin } = require("../../models");
 
@@ -83,6 +84,8 @@ exports.adminAuth = async (req, res, next) => {
     const { uuid } = decodedToken;
     const authAdmin = await Admin.findOne({ where: { uuid } });
     if (!authAdmin) return next(new AppError("Admin does not exist", 404));
+    if (authAdmin.email_verified_at === null)
+      return next(new AppError("Please verify your email address", 403));
 
     // Check if Admin changed their password after token was issued
     const jwtIssuedAt = (tokenIssuedAt) => {
