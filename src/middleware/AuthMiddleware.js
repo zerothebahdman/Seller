@@ -1,6 +1,5 @@
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
-const { Op } = require("sequelize");
 const AppError = require("../utils/AppErrorClass");
 const { User, Admin } = require("../../models");
 

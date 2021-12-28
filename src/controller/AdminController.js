@@ -15,7 +15,6 @@ const jwtToken = (uuid) =>
 exports.getAllAdmins = async (req, res, next) => {
   try {
     const admin = await Admin.findAll();
-    console.log(req.admin);
     res.status(200).json({ status: "success", admin });
   } catch (err) {
     return next(new AppError(err.message, err.status || 500));
@@ -27,7 +26,7 @@ exports.signup = async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, 13);
   // send email verification
-  const emailToken = randomBytes(7).toString("hex");
+  const emailToken = randomBytes(7).toString("base64").replaceAll("/", "B");
   const hashedEmailToken = createHash("sha256")
     .update(emailToken)
     .digest("hex");
