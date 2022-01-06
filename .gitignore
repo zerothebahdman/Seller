@@ -1,4 +1,4 @@
 .env
 node_modules
 javascript.png
-src/certs/private.pem 
+src/certs/private.pem  
