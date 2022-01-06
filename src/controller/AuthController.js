@@ -1,13 +1,8 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { User } = require("../../models");
 const AppError = require("../utils/AppErrorClass");
 const { loginMethod } = require("./FactoryFunctionController");
-
-const jwtToken = (uuid) =>
-  jwt.sign({ uuid }, process.env.JWT_SECRET_TOKEN, {
-    expiresIn: process.env.JWT_EXPIRATION,
-  });
+const jwtToken = require("../utils/SignJWT");
 
 exports.createUser = async (req, res, next) => {
   try {

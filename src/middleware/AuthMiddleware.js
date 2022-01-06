@@ -1,5 +1,7 @@
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
+const { readFileSync } = require("fs");
+const path = require("path");
 const AppError = require("../utils/AppErrorClass");
 const { User, Admin } = require("../../models");
 
@@ -20,10 +22,20 @@ exports.userAuth = async (req, res, next) => {
       );
     }
     //   Check if the token is valid
-    const decodedToken = await promisify(jwt.verify)(
-      token,
-      process.env.JWT_SECRET_TOKEN
+    const PUB_KEY = readFileSync(
+      path.join(__dirname, "../certs/public.pem"),
+      "utf-8"
     );
+
+    let decodedToken;
+    try {
+      decodedToken = await promisify(jwt.verify)(token, PUB_KEY, {
+        algorithms: ["RS256"],
+      });
+    } catch (err) {
+      if (err.name === "TokenExpiredError")
+        return new AppError("Whoops!, your token has expired.", 401);
+    }
 
     // Check if user exist
     const { uuid } = decodedToken;
@@ -73,11 +85,22 @@ exports.adminAuth = async (req, res, next) => {
         new AppError("You are not authenticated, please login.", 401)
       );
     }
+
     //   Check if the token is valid
-    const decodedToken = await promisify(jwt.verify)(
-      token,
-      process.env.JWT_SECRET_TOKEN
+    const PUB_KEY = readFileSync(
+      path.join(__dirname, "../certs/public.pem"),
+      "utf-8"
     );
+
+    let decodedToken;
+    try {
+      decodedToken = await promisify(jwt.verify)(token, PUB_KEY, {
+        algorithms: ["RS256"],
+      });
+    } catch (err) {
+      if (err.name === "TokenExpiredError")
+        return new AppError("Whoops!, your token has expired.", 401);
+    }
 
     // Check if Admin exist
     const { uuid } = decodedToken;
