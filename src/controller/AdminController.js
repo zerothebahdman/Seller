@@ -1,11 +1,16 @@
 const bcrypt = require("bcryptjs");
 const { randomBytes, createHash } = require("crypto");
+const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
 const AppError = require("../utils/AppErrorClass");
 const { Admin } = require("../../models");
 const { loginMethod } = require("./FactoryFunctionController");
 const sendEmail = require("../mail/AdminEmailVerification");
-const jwtToken = require("../utils/SignJWT");
+
+const jwtToken = (uuid) =>
+  jwt.sign({ uuid }, process.env.JWT_SECRET_TOKEN, {
+    expiresIn: process.env.JWT_EXPIRATION,
+  });
 
 exports.getAllAdmins = async (req, res, next) => {
   try {

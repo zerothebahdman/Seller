@@ -1,9 +1,14 @@
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const AppError = require("../utils/AppErrorClass");
-const jwtToken = require("../utils/SignJWT");
 
 const checkPassword = async (storedPassword, incommingPassword) =>
   await bcrypt.compare(storedPassword, incommingPassword);
+
+const jwtToken = (uuid) =>
+  jwt.sign({ uuid }, process.env.JWT_SECRET_TOKEN, {
+    expiresIn: process.env.JWT_EXPIRATION,
+  });
 
 exports.loginMethod = (Model) => async (req, res, next) => {
   try {
