@@ -1,5 +1,8 @@
 const express = require("express");
 const morgan = require("morgan");
+const { default: helmet } = require("helmet");
+const { default: rateLimit } = require("express-rate-limit");
+const xss = require("xss-clean");
 
 const userRouter = require("./routes/userRouter");
 const adsRouter = require("./routes/adsRouter");
@@ -8,7 +11,20 @@ const globalErrorHandler = require("./middleware/ErrorHandlerMiddleware");
 const AppError = require("./utils/AppErrorClass");
 
 const app = express();
+// Middleware that sets HTTP headers
+app.use(helmet());
+// Rate Limit middleware
+const limiter = rateLimit({
+  // Number of request
+  max: 100,
+  // Number of seconds between requests
+  windowMs: 60 * 60 * 1000, // 1 hour
+  message: `Too many request from this IP, Try again in a 1 hour`,
+});
+app.use("/api", limiter);
 
+// Middleware that performs data sanitization againts XXS
+app.use(xss());
 // Middleware that performs body Parsering, reading data from the request body and storing it in req.body
 app.use(express.json());
 
