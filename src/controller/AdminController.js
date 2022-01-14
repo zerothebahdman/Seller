@@ -1,16 +1,16 @@
-const bcrypt = require("bcryptjs");
-const { randomBytes, createHash } = require("crypto");
-const { Op } = require("sequelize");
-const AppError = require("../utils/AppErrorClass");
-const { Admin } = require("../../models");
-const { loginMethod } = require("./FactoryFunctionController");
-const sendEmail = require("../mail/AdminEmailVerification");
-const jwtToken = require("../utils/SignJWT");
+const bcrypt = require('bcryptjs');
+const { randomBytes, createHash } = require('crypto');
+const { Op } = require('sequelize');
+const AppError = require('../utils/AppErrorClass');
+const { Admin } = require('../../models');
+const { loginMethod } = require('./FactoryFunctionController');
+const sendEmail = require('../mail/AdminEmailVerification');
+const jwtToken = require('../utils/SignJWT');
 
 exports.getAllAdmins = async (req, res, next) => {
   try {
     const admin = await Admin.findAll();
-    res.status(200).json({ status: "success", admin });
+    res.status(200).json({ status: 'success', admin });
   } catch (err) {
     return next(new AppError(err.message, err.status || 500));
   }
@@ -21,10 +21,10 @@ exports.signup = async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, 13);
   // send email verification
-  const emailToken = randomBytes(7).toString("base64").replaceAll("/", "B");
-  const hashedEmailToken = createHash("sha256")
+  const emailToken = randomBytes(7).toString('base64').replaceAll('/', 'B');
+  const hashedEmailToken = createHash('sha256')
     .update(emailToken)
-    .digest("hex");
+    .digest('hex');
   console.log({ emailToken, hashedEmailToken });
   try {
     const checkIfUserExistsWithEmail = await Admin.findOne({
@@ -50,7 +50,7 @@ exports.signup = async (req, res, next) => {
     });
 
     const verificationUrl = `${req.protocol}://${req.get(
-      "host"
+      'host'
     )}/api/v1/admin/verify-email/${emailToken}`;
 
     sendEmail({
@@ -61,7 +61,7 @@ exports.signup = async (req, res, next) => {
 
     const jwttoken = jwtToken(admin.uuid);
     res.status(200).json({
-      status: "success",
+      status: 'success',
       message: `We just sent a verification email to ${admin.email}`,
       jwttoken,
       admin,
@@ -76,9 +76,9 @@ exports.login = loginMethod(Admin);
 exports.verifyEmail = async (req, res, next) => {
   try {
     // 1, Check the email has not been tampered
-    const hashedEmailToken = createHash("sha256")
+    const hashedEmailToken = createHash('sha256')
       .update(req.params.verificationToken)
-      .digest("hex");
+      .digest('hex');
 
     // 2, If the email is valid and the token has not expired verify the email
     const admin = await Admin.findOne({

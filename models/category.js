@@ -1,4 +1,4 @@
-const { Model } = require("sequelize");
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class category extends Model {
@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ SubCategory, Product }) {
       this.hasMany(SubCategory, {
-        as: "subcategory",
+        as: 'subcategory',
         hooks: true,
-        onDelete: "cascade",
-        onUpdate: "cascade",
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       });
       this.hasMany(Product, {
-        as: "product",
+        as: 'product',
         hooks: true,
-        onDelete: "cascade",
-        onUpdate: "cascade",
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       });
     }
   }
@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Category",
-      tableName: "categories",
+      modelName: 'Category',
+      tableName: 'categories',
     }
   );
   return category;

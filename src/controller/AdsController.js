@@ -1,6 +1,6 @@
-const cloudinary = require("cloudinary").v2;
-const { Product, Category, SubCategory, Admin } = require("../../models");
-const AppError = require("../utils/AppErrorClass");
+const cloudinary = require('cloudinary').v2;
+const { Product, Category, SubCategory, Admin } = require('../../models');
+const AppError = require('../utils/AppErrorClass');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -12,9 +12,9 @@ exports.getAllAd = async (req, res, next) => {
   try {
     const ad = await Product.findAll({
       include: [
-        { model: Admin, as: "admin", attributes: ["uuid", "name", "email"] },
-        { model: Category, as: "category", attributes: ["uuid", "name"] },
-        { model: SubCategory, as: "subcategory", attributes: ["uuid", "name"] },
+        { model: Admin, as: 'admin', attributes: ['uuid', 'name', 'email'] },
+        { model: Category, as: 'category', attributes: ['uuid', 'name'] },
+        { model: SubCategory, as: 'subcategory', attributes: ['uuid', 'name'] },
       ],
     });
     res.status(200).json({ status: `success`, number_of_ad: ad.length, ad });
@@ -25,15 +25,15 @@ exports.getAllAd = async (req, res, next) => {
 
 let adImage;
 const images = async (image) => {
-  const publicId = image.split(`/`).pop().replace(".", " ").split(" ")[0];
+  const publicId = image.split(`/`).pop().replace('.', ' ').split(' ')[0];
   adImage = await cloudinary.uploader.upload(
     image,
     {
       public_id: publicId,
-      folder: "testing",
+      folder: 'testing',
       overwrite: false,
       responsive: true,
-      transformation: { quality: "100", crop: "scale" },
+      transformation: { quality: '100', crop: 'scale' },
     },
     (err) => {
       if (err) console.log(err);
@@ -100,7 +100,7 @@ exports.createAd = async (req, res, next) => {
         adFourthImage !== undefined ? (await fourthImage).url : undefined,
     });
 
-    res.status(200).json({ status: "success", product });
+    res.status(200).json({ status: 'success', product });
   } catch (err) {
     return next(new AppError(err.message, err.status || 500));
   }

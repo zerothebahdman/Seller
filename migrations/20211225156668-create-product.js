@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("products", {
+    await queryInterface.createTable('products', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,10 +12,10 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "admins", // Name of the created table
-          key: "id",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
+          model: 'admins', // Name of the created table
+          key: 'id',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         },
       },
       adminUuid: { type: DataTypes.STRING, allowNull: false },
@@ -32,20 +32,20 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "categories", // Name of the created table
-          key: "id",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
+          model: 'categories', // Name of the created table
+          key: 'id',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         },
       },
       subcategoryId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "subcategories", // Name of the created table
-          key: "id",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
+          model: 'subcategories', // Name of the created table
+          key: 'id',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         },
       },
       quantity: {
@@ -58,7 +58,7 @@ module.exports = {
       },
       discount_price: { type: DataTypes.DECIMAL(8, 2), allowNull: true },
       product_condition: {
-        type: DataTypes.ENUM("Brand New", "Used"),
+        type: DataTypes.ENUM('Brand New', 'Used'),
         allowNull: false,
       },
       color: { type: DataTypes.STRING, allowNull: true },
@@ -91,7 +91,7 @@ module.exports = {
       },
     });
   },
-  down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable("products");
+  down: async (queryInterface) => {
+    await queryInterface.dropTable('products');
   },
 };
